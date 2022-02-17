@@ -1,8 +1,11 @@
 <nav>
     <ul>
-        <li><a href="{{path('app_home')}}">Home</a></li>
-        <li><a href="{{path('app_about')}}">About</a></li>
-        <li><a href="{{path('app_contact')}}">Contact</a></li>
+        <li>SYMF<strong>UX</strong></li>
+    </ul>
+    <ul>
+        <li><a href="{{path('app_home')}}" class="{{ app.request.get('_route') == 'app_home' ? 'active' }}">Home</a></li>
+        <li><a href="{{path('app_about')}}" class="{{ app.request.get('_route') == 'app_about' ? 'active' }}">About</a></li>
+        <li><a href="{{path('app_contact')}}" class="{{ app.request.get('_route') == 'app_contact' ? 'active' }}">Contact</a></li>
     </ul>
 </nav>
 <hr>
