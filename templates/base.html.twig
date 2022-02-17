@@ -16,7 +16,7 @@
     <body>
         {{ include('partials/_nav.html.twig') }}
 
-        <main role="main">
+        <main role="main" class="container">
             {% for message in app.flashes('success') %} 
                 <div style="font-weight: bold; color:#7CFC00; font-size:24px; background-color: #228B22;">{{ message }}</div>
             {% endfor %}
