@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Contact' %}
+
+{% block body %}
+    <h1>Contact</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.name, { 'attr': { 'placeholder' : 'Insert name' }}) }}
+        {{ form_row(form.message, { 'attr': { 'placeholder' : 'Insert message' }}) }}
+        <button type="submit">Send</button>
+    {{ form_end(form) }}
+{% endblock %}
