@@ -50,7 +50,16 @@ class AppController extends AbstractController
             dump('Sending mail ...');
 
             $this->addFlash('success', 'Mail sent '.$form['name']->getData());
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if($form->isSubmitted() && !$form->isValid()) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+            return $this->render('pages/contact.html.twig', [
+                'form' => $form->createView()
+            ], $response);
         }
 
         return $this->render('pages/contact.html.twig', [
