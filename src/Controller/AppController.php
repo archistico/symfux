@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\UX\Turbo\Stream\TurboStreamResponse;
 
 class AppController extends AbstractController
 {
@@ -32,7 +33,7 @@ class AppController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             dump('Sending mail ...');
 
-            if(str_contains($request->headers->get('accept'), 'text/vnd.turbo-stream.html')) {
+            if(TurboStreamResponse::STREAM_FORMAT === $request->getPreferredFormat()) {
                 $name = $form['name']->getData();
                 return new Response(
                     $this->renderView('streams/contact.html.twig', ['name' => $name]),
