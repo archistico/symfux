@@ -73,8 +73,8 @@ class AppController extends AbstractController
             ], $response);
         }
 
-         return $this->render('pages/contact.html.twig', [
-            'form' => $form->createView()
+         return $this->renderForm('pages/contact.html.twig', [
+            'form' => $form
         ]);
     }
 }
