@@ -31,14 +31,14 @@ class AppController extends AbstractController
         $form = $this->createFormBuilder()
             ->add('name', TextType::class, [
                 'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 2])
+                    new NotBlank(['message' => 'Not blank']),
+                    new Length(['min' => 2, 'minMessage' => 'Min 2 chars'])
                 ]
             ])
             ->add('message', TextareaType::class, [
                 'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 10])
+                    new NotBlank(['message' => 'Not blank']),
+                    new Length(['min' => 5, 'minMessage' => 'Min 5 chars'])
                 ]
             ])
             ->getForm()
