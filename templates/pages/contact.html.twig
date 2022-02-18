@@ -15,3 +15,16 @@
     {{ form_end(form) }}
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+    console.log('ok');
+    document.addEventListener("turbo:before-cache", function() {
+        document.querySelectorAll('div#contactdiv form > div > ul').forEach(element => {
+            element.remove();
+        });
+    });
+    </script>
+{% endblock %}
