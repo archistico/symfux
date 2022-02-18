@@ -2,6 +2,10 @@
 
 {% block title 'Contact' %}
 
+{% block meta %}
+    <meta name="turbo-cache-control" content="no-preview">
+{% endblock %}
+
 {% block body %}
     <h1>Contact</h1>
 
@@ -14,17 +18,4 @@
         <button type="submit" formnovalidate>Send</button>
     {{ form_end(form) }}
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    <script>
-    console.log('ok');
-    document.addEventListener("turbo:before-cache", function() {
-        document.querySelectorAll('div#contactdiv form > div > ul').forEach(element => {
-            element.remove();
-        });
-    });
-    </script>
 {% endblock %}
