@@ -49,6 +49,17 @@ class AppController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             dump('Sending mail ...');
 
+            if(str_contains($request->headers->get('accept'), 'text/vnd.turbo-stream.html')) {
+                $name = $form['name']->getData();
+                return new Response(
+                    $this->renderView('streams/contact.html.twig', ['name' => $name]),
+                    200,
+                    [
+                        'Content-Type' => 'text/vnd.turbo-stream.html'
+                    ]
+                );
+            }
+
             $this->addFlash('success', 'Mail sent '.$form['name']->getData());
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
