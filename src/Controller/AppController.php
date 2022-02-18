@@ -26,7 +26,6 @@ class AppController extends AbstractController
     public function contact(Request $request): Response
     {
         $form = $this->createForm(ContactType::class);
-        $emptyForm = clone $form;
 
         $form->handleRequest($request);
 
@@ -36,7 +35,7 @@ class AppController extends AbstractController
             if(str_contains($request->headers->get('accept'), 'text/vnd.turbo-stream.html')) {
                 $name = $form['name']->getData();
                 return new Response(
-                    $this->renderView('streams/contact.html.twig', ['name' => $name, 'form'=> $emptyForm->createView()]),
+                    $this->renderView('streams/contact.html.twig', ['name' => $name]),
                     200,
                     [
                         'Content-Type' => 'text/vnd.turbo-stream.html'
