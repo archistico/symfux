@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
+use App\Form\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AppController extends AbstractController
 {
@@ -28,21 +25,8 @@ class AppController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contact(Request $request): Response
     {
-        $form = $this->createFormBuilder()
-            ->add('name', TextType::class, [
-                'constraints' => [
-                    new NotBlank(['message' => 'Not blank']),
-                    new Length(['min' => 2, 'minMessage' => 'Min 2 chars'])
-                ]
-            ])
-            ->add('message', TextareaType::class, [
-                'constraints' => [
-                    new NotBlank(['message' => 'Not blank']),
-                    new Length(['min' => 5, 'minMessage' => 'Min 5 chars'])
-                ]
-            ])
-            ->getForm()
-        ;
+        $form = $this->createForm(ContactType::class);
+        $emptyForm = clone $form;
 
         $form->handleRequest($request);
 
@@ -52,7 +36,7 @@ class AppController extends AbstractController
             if(str_contains($request->headers->get('accept'), 'text/vnd.turbo-stream.html')) {
                 $name = $form['name']->getData();
                 return new Response(
-                    $this->renderView('streams/contact.html.twig', ['name' => $name]),
+                    $this->renderView('streams/contact.html.twig', ['name' => $name, 'form'=> $emptyForm->createView()]),
                     200,
                     [
                         'Content-Type' => 'text/vnd.turbo-stream.html'
