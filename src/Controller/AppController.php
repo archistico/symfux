@@ -35,13 +35,7 @@ class AppController extends AbstractController
 
             if(TurboStreamResponse::STREAM_FORMAT === $request->getPreferredFormat()) {
                 $name = $form['name']->getData();
-                return new Response(
-                    $this->renderView('streams/contact.html.twig', ['name' => $name]),
-                    200,
-                    [
-                        'Content-Type' => 'text/vnd.turbo-stream.html'
-                    ]
-                );
+                return $this->render('streams/contact.html.twig', ['name' => $name], new TurboStreamResponse());
             }
 
             $this->addFlash('success', 'Mail sent '.$form['name']->getData());
